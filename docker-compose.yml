@@ -1,0 +1,33 @@
+version: '2.2'
+
+services:
+  sqlserver:
+    hostname: sqlsever
+    build:
+      context: SqlServer/
+    ports:
+      - "1433:1433"
+    restart: always
+    networks:
+      - netcore
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'test.123'
+      MSSQL_PID: 'Standard'
+
+  web:
+    build:
+      context: NetCore/
+      args:
+        VERSION: 3.1
+    ports:
+      - "5000:5000"
+    restart: always
+    networks:
+      - netcore
+    depends_on:
+      - sqlserver
+
+networks:
+  netcore:
+    driver: bridge
