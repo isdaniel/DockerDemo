@@ -1,5 +1,5 @@
-#FROM mcr.microsoft.com/dotnet/sdk:${VERSION}
-FROM mcr.microsoft.com/dotnet/sdk:3.1
+ARG VERSION
+FROM mcr.microsoft.com/dotnet/sdk:${VERSION}
 ENV webdir /WebFolder
 COPY ./bin $webdir
 WORKDIR $webdir

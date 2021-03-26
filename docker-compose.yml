@@ -2,6 +2,7 @@ version: '2.2'
 
 services:
   sqlserver:
+    image: dog830228/sqlserverdemo:latest
     hostname: sqlsever
     build:
       context: SqlServer/
@@ -16,6 +17,7 @@ services:
       MSSQL_PID: 'Standard'
 
   web:
+    image: dog830228/netcoresample:1.0
     build:
       context: NetCore/
       args:
@@ -23,6 +25,8 @@ services:
     ports:
       - "5000:5000"
     restart: always
+    environment:
+      DBConnection: 'Data Source=sqlserver;Initial Catalog=AdventureWorksDW2017;User ID=sa;Password=test.123;'
     networks:
       - netcore
     depends_on:
