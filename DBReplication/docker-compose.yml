@@ -1,0 +1,55 @@
+version: '2.0'
+
+services:
+  subscriber:
+    image: dog830228/subscriberdemo:1.0
+    hostname: subscriber
+    build:
+      context: Subscriber/
+    ports:
+      - "1530:1433"
+    restart: always
+    networks:
+      - replication
+    depends_on:
+      - publisher
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'test.123'
+      MSSQL_PID: 'Standard'
+
+  publisher:
+    image: dog830228/publisherdemo:1.0
+    hostname: publisher
+    build:
+      context: Publisher/
+    ports:
+      - "1531:1433"
+    restart: always
+    networks:
+      - replication
+    depends_on:
+      - distributor
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'test.123'
+      MSSQL_PID: 'Standard'
+  
+  distributor:
+    image: dog830228/distributordemo:1.0
+    hostname: distributor
+    build:
+      context: Distributor/
+    ports:
+      - "1532:1433"
+    restart: always
+    networks:
+      - replication
+    environment:
+      ACCEPT_EULA: 'Y'
+      SA_PASSWORD: 'test.123'
+      MSSQL_PID: 'Standard'
+
+networks:
+  replication:
+    driver: bridge
