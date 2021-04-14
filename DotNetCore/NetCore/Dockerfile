@@ -1,10 +1,12 @@
-ARG VERSION
-FROM mcr.microsoft.com/dotnet/sdk:${VERSION}
-MAINTANER dog830228@gmail.com
-#設定環境變數
-ENV webdir /WebFolder
-COPY ./bin $webdir
-#當作進入點時目錄
-WORKDIR $webdir
-EXPOSE 5000
-CMD dotnet $webdir/ConsoleWeb.dll
+FROM mcr.microsoft.com/dotnet/sdk:3.1 as build
+Copy ./ConsoleWeb /ConsoleWeb
+WORKDIR /ConsoleWeb
+RUN dotnet restore
+RUN dotnet publish -c Release -o /app
+
+FROM mcr.microsoft.com/dotnet/aspnet:3.1 as server
+WORKDIR /app
+COPY --from=build /app .
+CMD dotnet ConsoleWeb.dll
+
+

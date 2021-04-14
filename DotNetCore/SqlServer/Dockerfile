@@ -1,5 +1,4 @@
 FROM microsoft/mssql-server-linux:latest
-MAINTANER dog830228@gmail.com
 RUN apt-get update && apt-get install -y  \
 	curl \
 	apt-transport-https

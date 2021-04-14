@@ -15,4 +15,4 @@ Please use this command in the Root path of this Repository
 docker-compose up -d
 ```
 
-Then you can execute http://localhost:5000 to see that docker web service.
+Then you can execute http://localhost:6001 to see that docker web service.

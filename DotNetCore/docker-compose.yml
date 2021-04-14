@@ -23,7 +23,9 @@ services:
       args:
         VERSION: 3.1
     ports:
-      - "5000:5000"
+      - "6001:80"
+    expose:
+      - "80"
     restart: always
     environment:
       DBConnection: 'Data Source=sqlserver;Initial Catalog=AdventureWorksDW2017;User ID=sa;Password=test.123;'
