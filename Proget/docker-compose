@@ -1,0 +1,35 @@
+version: '3.8'
+services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: inedo-sql
+    ports:
+      - "1433:1433"
+    networks:
+      inedo:
+        aliases:
+          - inedo-sql
+    environment:
+      ACCEPT_EULA: Y
+      MSSQL_SA_PASSWORD: test.123
+      MSSQL_PID: Express
+    command: sh -c "/opt/mssql-tools/bin/sqlcmd -S inedo-sql -U SA -P 'test.123' -Q 'CREATE DATABASE [ProGet] COLLATE SQL_Latin1_General_CP1_CI_AS' & /opt/mssql/bin/sqlservr"
+  pg:
+    image: proget.inedo.com/productimages/inedo/proget
+    container_name: proget
+    environment: 
+      SQL_CONNECTION_STRING: Data Source=inedo-sql; Initial Catalog=ProGet; User ID=sa; Password=test.123
+    ports:
+      - "5050:80"
+    networks:
+      inedo:
+        aliases:
+          - proget
+    volumes:
+      - D:/proget-packages:/var/proget/packages
+    depends_on:
+      - db
+
+networks:
+  inedo:
+    name: inedo
