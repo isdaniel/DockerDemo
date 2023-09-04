@@ -10,7 +10,7 @@ services:
   ora2pg:
     container_name: ora2pg
     environment:
-      CONFIG_LOCATION: "/config/ora2pg.conf"
+      CONFIG_LOCATION: "/ora2pg_lib/config/ora2pg.conf"
       OUTPUT_LOCATION: "/data"
       ORA_HOST: "dbi:Oracle:host=oracle.xe;sid=SIDNAME;port=1521"
       ORA_USER: "system"
@@ -18,8 +18,8 @@ services:
     #command: ora2pg -t SHOW_VERSION -c /config/ora2pg.conf
     command: tail -f /dev/null
     volumes:
-      - './config:/config'
-      - './data:/data'
+      - './config:/ora2pg_lib/config'
+      - './data:/ora2pg_lib/data'
     image: georgmoser/ora2pg
   # vm-ubuntu:
   #   container_name: ubuntu
