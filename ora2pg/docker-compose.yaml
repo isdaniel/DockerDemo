@@ -21,8 +21,3 @@ services:
       - './config:/ora2pg_lib/config'
       - './data:/ora2pg_lib/data'
     image: georgmoser/ora2pg
-  # vm-ubuntu:
-  #   container_name: ubuntu
-  #   image: ubuntu:22.04
-  #   command: tail -f /dev/null
-
